@@ -1,6 +1,6 @@
 pandas
 numpy
-"dask[complete]"
 scikit-learn
 openpyxl
 joblib
+Flask
