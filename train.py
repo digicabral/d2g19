@@ -6,12 +6,16 @@ import dask.dataframe as dd
 from dask.distributed import Client
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn.linear_model import LinearRegression
 from fbprophet import Prophet
 from fbprophet.diagnostics import cross_validation, performance_metrics
 from fbprophet.plot import plot_cross_validation_metric
 from math import sqrt
-from datetime import datetime
+import datetime as dt
+import matplotlib.pyplot as plt
 import itertools
+from functools import reduce
+
 
 # Load Data
 def load_data():
@@ -20,7 +24,7 @@ def load_data():
 
 # Adjusting data
 def adjust_data(dataframe):
-    #Removo as colunas que não serão utilizadas
+    #Removo as colunas que não serão utilizadas e deixo apenas as listadas abaixo e o index com a data
     df = dataframe.filter(['demitido','ativos','admissoes','attrition','attrition_18a27','attrition_27a30','attrition_0a35','attrition_35a40','attrition_40mais'])
     
     # Criando a coluna ds que é requisito obrigatório do prophet com as informações temporais e instanciando o modelo do prophet
@@ -30,17 +34,20 @@ def adjust_data(dataframe):
     # ordenando do mais antigo para o mais novo
     df = df.sort_index(axis=0)
 
-    # Separating datasets train 80% and test 20%
+    #Separamos os datasets em 80% para treino e 20% para teste caso necessário,
+    #Mas nesta função todo o dataset está sendo utilizado para realizar o predict real com os dados de 2022 que ainda não existem
     split_point = int((len(df)/100)*80)
     df_train = df[0:split_point]
     df_test = df[split_point:]
 
     # write to disk
-    df_train.to_csv('./data/df_train.csv')
-    df_test.to_csv('./data/df_test.csv')
+    df_train.to_csv('df_train.csv')
+    df_test.to_csv('df_test.csv')
 
     return df
 
+#Função para encontrar os melhores hiperparâmetros de acordo com a documentação do Facebook Prophet
+#https://facebook.github.io/prophet/docs/diagnostics.html
 def best_params(dataframe):
     # connect to the cluster
     client = Client()
@@ -50,8 +57,8 @@ def best_params(dataframe):
             }
     # Generate all combinations of parameters
     all_params = [dict(zip(param_grid.keys(), v)) for v in itertools.product(*param_grid.values())]
-    rmses = []  # Store the RMSEs for each params here
-    # Use cross validation to evaluate all parameters
+    rmses = []  # Armazena todos os RMSEs para cada parâmetro
+    # Usando cross validation para avaliar todos os parâmetros
     for params in all_params:
         # Fit model with given params
         m = Prophet(**params).fit(dataframe)
@@ -64,6 +71,7 @@ def best_params(dataframe):
     best_params = all_params[np.argmin(rmses)]
     return best_params
 
+#Função de Treino
 def train(dataframe, params):
   model = Prophet(**params)
   #Faço um for adicionando todas as colunas exceto a attrition e o y que é a target, e o ds que é a data
@@ -73,9 +81,13 @@ def train(dataframe, params):
   model = model.fit(dataframe)
   return model
 
+
+#Função para gerar o arquivo pickle
 def serialize(model):
     joblib.dump(model, filename="models/model_pipeline.pkl")
 
+    
+#Função que roda o pipeline
 def run():
     df = adjust_data(load_data())
     best_param = best_params(df)

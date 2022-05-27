@@ -11,7 +11,7 @@ def predict():
     predictions = model.predict(dados)
     return predictions['yhat'].to_json(orient="records")
 
-@app.route("/predict", methods=["GET"])
+@app.route("/predict", methods=["POST"])
 def predict_months():
     dados = request.get_json()
     return "Months"
