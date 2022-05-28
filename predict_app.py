@@ -28,16 +28,6 @@ def adjust_data(dataframe):
     # ordenando do mais antigo para o mais novo
     df = df.sort_index(axis=0)
 
-    #Separamos os datasets em 80% para treino e 20% para teste caso necessário,
-    #Mas nesta função todo o dataset está sendo utilizado para realizar o predict real com os dados de 2022 que ainda não existem
-    split_point = int((len(df)/100)*80)
-    df_train = df[0:split_point]
-    df_test = df[split_point:]
-
-    # write to disk
-    df_train.to_csv('df_train.csv')
-    df_test.to_csv('df_test.csv')
-
     return df
 
 def get_columns_regression():
