@@ -6,7 +6,6 @@ import dask.dataframe as dd
 from dask.distributed import Client
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, mean_absolute_error
-from sklearn.linear_model import LinearRegression
 from fbprophet import Prophet
 from fbprophet.diagnostics import cross_validation, performance_metrics
 from fbprophet.plot import plot_cross_validation_metric

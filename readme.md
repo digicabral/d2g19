@@ -44,6 +44,8 @@ Rodar app Flask
 flask run
 ```
 
+<br/>
+
 ## Etapas do aprendizado
 As colunas utilizadas para o aprendizado foram:
 
@@ -76,6 +78,7 @@ Por fim, com o modelo treinado, geramos o dump do modelo, através da função s
 \
 Em seguida rodamos a função run() que executa todos os processos listados acima na ordem definida.
 
+<br/>
 
 ## Etapas para o forecast
 
@@ -126,3 +129,61 @@ Neste parâmetro definimos uma data superior à data de início do dataset futur
 
 \
 Com os parâmetros definidos conforme o exemplo acima, o algoritmo gera uma regressão dos dados necessários para a previsão baseada no período entre 07/2021 e 12/2021. E um dataset futuro com os meses entre 01/2022 e 07/2022 (meses que serão previstos o attrition). Desta forma, fica à critério do usuário a definição das datas desejadas para previsão e para input de dados.
+
+<br/>
+
+## Testando o ambiente
+Após seguir o passo à passo dos pré requisitos, um teste pode ser realizado acessando através do navegador ou de alguma ferramenta de requisições HTTP (Postman, Insomnia, Thunder) a URL http://localhost:5000/predict_one.
+
+\
+O acesso à esta URL realiza uma requisição do tipo HTTP GET à API e retorna a previsão baseada nos dados de teste do arquivo predict_test.csv que se encontra na pasta /data do projeto.
+
+<br/>
+
+## Realizando previsões via API
+Para realizar as previsões de vários meses, foi criada a rota /predict_months.
+
+<br/>
+
+Para utilizar esta rota é necessário realizar uma requisição HTTP do tipo POST, com o envio do tipo JSON no corpo da requisição na através da URL http://localhost:5000/predict_months.
+Exemplo abaixo:
+
+```json
+{
+    "data_ini_regressao": "01/05/2021",
+    "data_fim_regressao": "01/12/2021",
+    "dt_ini_previsao": "01/01/2022",
+    "dt_fim_previsao": "01/07/2022"
+}
+
+```
+
+<br/>
+
+Onde: <br/>
+data_ini_regressao  - define a data de início de utilização do dataset para gerar a regressão <br/>
+data_fim_regressao  - define a data de fim de utilização do dataset para gerar a regressão <br/>
+dt_ini_previsao - define a data de início das previsões <br/>
+dt_fim_previsao - define a data de fim das previsões
+
+<br/>
+
+Se a requisição for realizada com sucesso, o código de status será o HTTP 200 e o retorno será um JSON contendo um array com as informações das previsões conforme o exemplo abaixo:
+<br/>
+
+```json
+[
+  {
+    "ds": "01/01/2022",
+    "yhat_lower": 59.684783704,
+    "yhat_upper": 59.7624953741,
+    "yhat": 59.7279478548
+  }
+]
+```
+<br/>
+Onde:<br/>
+ds - Data do mês previsto<br/>
+yhat_lower - Valor mais baixo da previsão <br/>
+yhat_upper - Valor mais alto da previsão <br/>
+yhat - Valor da previsão
