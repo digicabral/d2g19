@@ -12,8 +12,6 @@ export default function Home(){
     const [endDatePrevisao, setEndDatePrevisao] = useState(new Date());
     const [previsoes, setPrevisoes] = useState([])
 
-    console.log(previsoes.length)
-
     function formataData(data){
         var dataParam = data,
             dia  = '01',
