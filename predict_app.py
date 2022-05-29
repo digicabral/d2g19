@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 import pandas as pd
 import numpy as np
 import datetime as dt
@@ -8,6 +9,8 @@ from functools import reduce
 from sklearn.linear_model import LinearRegression
 
 app=Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 def read_model():
     model = joblib.load("models/model_pipeline.pkl")
@@ -76,6 +79,7 @@ def generate_linear_regression(dt_ini_reg, dt_fim_reg, dt_ini_futuro, dt_fim_fut
   return df_merged
 
 @app.route("/predict_one", methods=["GET"])
+@cross_origin()
 def predict():
     dados = pd.read_csv('data/predict_test.csv')
     model = read_model()
@@ -83,6 +87,7 @@ def predict():
     return predictions['yhat'].to_json(orient="records")
 
 @app.route("/predict_months", methods=["POST"])
+@cross_origin()
 def predict_months():
     #Recebe os dados do POST
     dadosRequest = request.get_json()
