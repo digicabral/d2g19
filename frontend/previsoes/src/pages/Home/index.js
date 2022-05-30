@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import DatePicker from 'react-datepicker';
 import './home.css'
 import axios from 'axios';
+import Plot from 'react-plotly.js'
 
 export default function Home(){
 
@@ -41,12 +42,29 @@ export default function Home(){
         axios.post('http://localhost:5000/predict_months', data)
         .then((response)=>{
             setPrevisoes(response.data)
+            console.log(previsoes)
         })
         .catch((error)=>{
             console.log(error)
         })
     }
 
+   function transformDataChart(dados){
+        let plot_data = []
+        let x = []
+        let y = []
+        dados.map(each => {
+            x.push(each.ds)
+            y.push(each.yhat)
+        })
+        plot_data['x'] = x;
+        plot_data['y'] = y
+
+        console.log(plot_data)
+        
+        return plot_data
+    }
+    
     return(
         <div className="outside-div">
             <Header/>
@@ -93,6 +111,31 @@ export default function Home(){
             {previsoes.length === 0 ? (
                 <div></div>
             ) : (
+                
+                <div>
+                    <div className='grafico'>
+                    <Plot
+                        data={[
+                            {
+                                x: transformDataChart(previsoes)['x'],
+                                y: transformDataChart(previsoes)['y'],
+                                type: 'scatter'
+                            }
+                        ]}
+                        layout={
+                            { width: 1300, 
+                              height:600, 
+                              title: 'Previsão de Attrition',
+                              yaxis: {
+                                  rangemode: 'tozero',
+                                  autorange: true
+                              }
+                             }
+                        }
+                    />
+                    </div>
+                <br></br>
+        
                 <table>
                 <thead>
                     <tr>
@@ -115,6 +158,7 @@ export default function Home(){
                     })}
                 </tbody>
             </table>
+            </div>
             )
             }
             </div>           
