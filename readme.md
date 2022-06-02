@@ -187,3 +187,15 @@ ds - Data do mês previsto<br/>
 yhat_lower - Valor mais baixo da previsão <br/>
 yhat_upper - Valor mais alto da previsão <br/>
 yhat - Valor da previsão
+ <br/>
+ <br/>
+
+# Links das análises anteriores (colabs)
+Todos os links abaixo nos levaram às conclusões descritas acima </br>
+https://colab.research.google.com/drive/13eGtQiXDXhZ-JPAFbxjRXM_PP5grEKJf?usp=sharing <br/>
+https://colab.research.google.com/drive/1A_d6g8Sye-ZbKp-PVuz3CAFs17A9JpJS?usp=sharing <br/>
+https://colab.research.google.com/drive/1ka3qi6y_8k-A_xTGsQUQGTxuHHdVJ2Lc?usp=sharing <br/>
+https://colab.research.google.com/drive/1pAYurO2clN0FQ5TyP72O1xYg-4SmRZhc?usp=sharing <br/>
+https://colab.research.google.com/drive/1TAWWL667PmvN09sh9xfkINopQhT579y5?usp=sharing <br/>
+https://colab.research.google.com/drive/1rDwM_RKFtcx97TrtaXhqJePEULdoBhFQ?usp=sharing <br/>
+https://colab.research.google.com/drive/1S3yOD1ibJpMPQz3L9IrKxfmO5Yt84m2J?usp=sharing
