@@ -192,6 +192,7 @@ yhat - Valor da previsão
 
 # Links das análises anteriores (colabs)
 Todos os links abaixo nos levaram às conclusões descritas acima </br>
+https://drive.google.com/file/d/12oDL_QFmLuLu6k1PaXOSo61QxSavNp7t/view?usp=sharing <br/>
 https://colab.research.google.com/drive/13eGtQiXDXhZ-JPAFbxjRXM_PP5grEKJf?usp=sharing <br/>
 https://colab.research.google.com/drive/1A_d6g8Sye-ZbKp-PVuz3CAFs17A9JpJS?usp=sharing <br/>
 https://colab.research.google.com/drive/1ka3qi6y_8k-A_xTGsQUQGTxuHHdVJ2Lc?usp=sharing <br/>
