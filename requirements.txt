@@ -1,4 +1,5 @@
 pandas
+isort
 numpy
 scikit-learn
 openpyxl

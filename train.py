@@ -23,7 +23,7 @@ def load_data():
 
 # Adjusting data
 def adjust_data(dataframe):
-    #Removo as colunas que não serão utilizadas e deixo apenas as listadas abaixo e o index com a data
+    #Removo as colunas que nao serão utilizadas e deixo apenas as listadas abaixo e o index com a data
     df = dataframe.filter(['demitido','ativos','admissoes','attrition','attrition_18a27','attrition_27a30','attrition_0a35','attrition_35a40','attrition_40mais'])
     
     # Criando a coluna ds que é requisito obrigatório do prophet com as informações temporais e instanciando o modelo do prophet
@@ -40,8 +40,8 @@ def adjust_data(dataframe):
     df_test = df[split_point:]
 
     # write to disk
-    df_train.to_csv('df_train.csv')
-    df_test.to_csv('df_test.csv')
+    df_train.to_csv('data/df_train.csv')
+    df_test.to_csv('data/df_test.csv')
 
     return df
 
