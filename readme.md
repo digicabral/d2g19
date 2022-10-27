@@ -1,6 +1,6 @@
 # Facebook Prophet D2G19
 
-Algoritmo para previsão de attrition.
+Algoritmo para previsão de turnover de colaboradores.
 
 [![Build Status](https://github.com/facebook/prophet/workflows/Build/badge.svg)](https://facebook.github.io/prophet/)
 
